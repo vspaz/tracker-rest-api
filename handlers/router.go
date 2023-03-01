@@ -19,3 +19,8 @@ func NewRouter(conf *config.Conf, logger *logrus.Logger) *Router {
 		mux:    chi.NewRouter(),
 	}
 }
+
+func (r *Router) RegisterHandlers() {
+	r.mux.Get("/ping", r.GetHealthStatus)
+	r.mux.Post("/ping", r.GetHealthStatus)
+}
