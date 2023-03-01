@@ -15,7 +15,8 @@ type SingletonConfig struct {
 }
 
 type Conf struct {
-	Http *Http
+	Http    *Http
+	Logging *Logging
 }
 
 type Http struct {
@@ -30,6 +31,10 @@ type Server struct {
 	RequestExecutionTimeout time.Duration
 }
 
+type Logging struct {
+	Level string
+}
+
 func initConfig() *SingletonConfig {
 	return &SingletonConfig{
 		Config: &Conf{
@@ -41,6 +46,9 @@ func initConfig() *SingletonConfig {
 					IdleTimeout:             10 * time.Second,
 					RequestExecutionTimeout: 10 * time.Second,
 				},
+			},
+			Logging: &Logging{
+				Level: "info",
 			},
 		},
 	}
