@@ -9,5 +9,6 @@ import (
 func Run() {
 	conf := config.GetConfig().Config
 	logger := logging.GetTextLogger(conf.Logging.Level).Logger
-	handlers.NewRouter(conf, logger)
+	router := handlers.NewRouter(conf, logger)
+	router.RegisterHandlers()
 }

@@ -1,9 +1,15 @@
 package handlers
 
 import (
+	"context"
 	"github.com/go-chi/chi/v5"
 	"github.com/sirupsen/logrus"
 	"github.com/vspaz/tracker-rest-api/config"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 type Router struct {
@@ -23,4 +29,34 @@ func NewRouter(conf *config.Conf, logger *logrus.Logger) *Router {
 func (r *Router) RegisterHandlers() {
 	r.mux.Get("/ping", r.GetHealthStatus)
 	r.mux.Post("/ping", r.GetHealthStatus)
+}
+
+func (r *Router) handleShutDownGracefully(server *http.Server) {
+	signals := []os.Signal{syscall.SIGINT, syscall.SIGTERM}
+	signalChannel := make(chan os.Signal, 1)
+	signal.Notify(signalChannel, signals...)
+	r.Logger.Infof("'%s' signal received, stopping server...", <-signalChannel)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
+
+	defer cancel()
+
+	if err := server.Shutdown(ctx); err != nil {
+		r.Logger.Errorf("error shutting down server: %s", err)
+	}
+}
+
+func (r *Router) StartServer() {
+	server := &http.Server{
+		Addr:         r.Conf.Http.Server.HostAndPort,
+		Handler:      http.TimeoutHandler(r.mux, r.Conf.Http.Server.RequestExecutionTimeout, "timeout occurred"),
+		ReadTimeout:  r.Conf.Http.Server.ReadTimeout,
+		WriteTimeout: r.Conf.Http.Server.WriteTimeout,
+		IdleTimeout:  r.Conf.Http.Server.IdleTimeout,
+	}
+	go r.handleShutDownGracefully(server)
+	r.Logger.Infof("starting server pid='%d' at port '%s'.", os.Getpid(), r.Conf.Http.Server.HostAndPort)
+	if err := server.ListenAndServe(); err != http.ErrServerClosed {
+		r.Logger.Fatalf("error occurred: %s", err)
+	}
+	r.Logger.Info("server stopped.")
 }
