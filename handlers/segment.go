@@ -29,3 +29,12 @@ func (r *Router) Page(response http.ResponseWriter, request *http.Request) {
 	render.Status(request, http.StatusOK)
 	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
 }
+
+func (r *Router) Import(response http.ResponseWriter, request *http.Request) {
+	render.Status(request, http.StatusOK)
+	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
+}
+func (r *Router) Batch(response http.ResponseWriter, request *http.Request) {
+	render.Status(request, http.StatusOK)
+	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
+}
