@@ -27,6 +27,10 @@ func NewRouter(conf *config.Conf, logger *logrus.Logger) *Router {
 }
 
 func (r *Router) RegisterHandlers() {
+	apiV1Prefix := "/api/v1/"
+	r.mux.Get("/", r.Index)
+	r.mux.Get(apiV1Prefix, r.Index)
+
 	r.mux.Get("/ping", r.GetHealthStatus)
 	r.mux.Post("/ping", r.GetHealthStatus)
 }
