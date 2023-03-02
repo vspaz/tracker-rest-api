@@ -43,8 +43,10 @@ func (r *Router) RegisterHandlers() {
 	r.mux.Post(apiV1Prefix+"page", r.Page)
 	r.mux.Post(apiV1Prefix+"p", r.Page)
 
+	r.mux.Post(apiV1Prefix+"screen", r.Screen)
+	r.mux.Post(apiV1Prefix+"s", r.Screen)
+
 	r.mux.Post(apiV1Prefix+"batch", r.Batch)
-	r.mux.Post(apiV1Prefix+"import", r.Import)
 
 	r.mux.Get("/ping", r.GetHealthStatus)
 	r.mux.Post("/ping", r.GetHealthStatus)
