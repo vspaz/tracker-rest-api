@@ -10,6 +10,7 @@ func Run() {
 	conf := config.GetConfig().Config
 	logger := logging.GetTextLogger(conf.Logging.Level).Logger
 	router := handlers.NewRouter(conf, logger)
+	router.ConfigureMiddleware()
 	router.RegisterHandlers()
 	router.StartServer()
 }
