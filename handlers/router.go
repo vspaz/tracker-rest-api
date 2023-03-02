@@ -31,6 +31,21 @@ func (r *Router) RegisterHandlers() {
 	r.mux.Get("/", r.Index)
 	r.mux.Get(apiV1Prefix, r.Index)
 
+	r.mux.Post(apiV1Prefix+"track", r.Track)
+	r.mux.Post(apiV1Prefix+"t", r.Track)
+
+	r.mux.Post(apiV1Prefix+"identify", r.Identify)
+	r.mux.Post(apiV1Prefix+"i", r.Identify)
+
+	r.mux.Post(apiV1Prefix+"alias", r.Alias)
+	r.mux.Post(apiV1Prefix+"a", r.Alias)
+
+	r.mux.Post(apiV1Prefix+"page", r.Page)
+	r.mux.Post(apiV1Prefix+"p", r.Page)
+
+	r.mux.Post(apiV1Prefix+"batch", r.Batch)
+	r.mux.Post(apiV1Prefix+"import", r.Import)
+
 	r.mux.Get("/ping", r.GetHealthStatus)
 	r.mux.Post("/ping", r.GetHealthStatus)
 }
