@@ -17,6 +17,18 @@ type SingletonConfig struct {
 type Conf struct {
 	Http    *Http
 	Logging *Logging
+	Kafka   Kafka
+}
+
+type Producer struct {
+}
+
+type Consumer struct {
+}
+
+type Kafka struct {
+	Consumer Consumer
+	Producer Producer
 }
 
 type Http struct {
