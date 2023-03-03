@@ -48,8 +48,8 @@ func (r *Router) RegisterHandlers() {
 
 	r.mux.Post(apiV1Prefix+"batch", r.Batch)
 
-	r.mux.Get("/ping", r.GetHealthStatus)
-	r.mux.Post("/ping", r.GetHealthStatus)
+	r.mux.Get("/ping", r.Ping)
+	r.mux.Post("/ping", r.Ping)
 }
 
 func (r *Router) handleShutDownGracefully(server *http.Server) {
