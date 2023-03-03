@@ -3,7 +3,7 @@ package app
 import (
 	"github.com/vspaz/simplelogger/pkg/logging"
 	"github.com/vspaz/tracker-rest-api/config"
-	"github.com/vspaz/tracker-rest-api/handlers"
+	"github.com/vspaz/tracker-rest-api/web/handlers"
 )
 
 func Run() {
