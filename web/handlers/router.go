@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/go-chi/chi/v5"
 	"github.com/sirupsen/logrus"
 	"github.com/vspaz/tracker-rest-api/config"
@@ -13,9 +14,10 @@ import (
 )
 
 type Router struct {
-	Logger *logrus.Logger
-	Conf   *config.Conf
-	mux    *chi.Mux
+	Logger        *logrus.Logger
+	Conf          *config.Conf
+	mux           *chi.Mux
+	kafkaProducer *kafka.Producer
 }
 
 func NewRouter(conf *config.Conf, logger *logrus.Logger) *Router {
@@ -24,6 +26,10 @@ func NewRouter(conf *config.Conf, logger *logrus.Logger) *Router {
 		Conf:   conf,
 		mux:    chi.NewRouter(),
 	}
+}
+
+func (r *Router) SetKafkaProducer(kafkaProducer *kafka.Producer) {
+	r.kafkaProducer = kafkaProducer
 }
 
 func (r *Router) RegisterHandlers() {
