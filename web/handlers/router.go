@@ -30,6 +30,7 @@ func NewRouter(conf *config.Conf, logger *logrus.Logger) *Router {
 
 func (r *Router) SetKafkaProducer(kafkaProducer *kafka.Producer) {
 	r.kafkaProducer = kafkaProducer
+	r.Logger.Info("kafka producer set: 'ok'.")
 }
 
 func (r *Router) RegisterHandlers() {

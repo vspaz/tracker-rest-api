@@ -8,7 +8,7 @@ import (
 func NewKafkaProducer(producerConfig *kafka.ConfigMap, logger *logrus.Logger) *kafka.Producer {
 	producer, err := kafka.NewProducer(producerConfig)
 	if err != nil {
-		logger.Fatalf("failed to init kafka producer")
+		logger.Fatalf("failed to init kafka producer: %s", err)
 	}
 	logger.Info("kafka producer is initialized")
 	return producer
