@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"sync"
 	"time"
 )
@@ -17,18 +18,20 @@ type SingletonConfig struct {
 type Conf struct {
 	Http    *Http
 	Logging *Logging
-	Kafka   Kafka
+	Kafka   *Kafka
 }
 
 type Producer struct {
+	ConfigMap *kafka.ConfigMap
 }
 
 type Consumer struct {
+	ConfigMap *kafka.ConfigMap
 }
 
 type Kafka struct {
-	Consumer Consumer
-	Producer Producer
+	Consumer *Consumer
+	Producer *Producer
 }
 
 type Http struct {
@@ -61,6 +64,14 @@ func initConfig() *SingletonConfig {
 			},
 			Logging: &Logging{
 				Level: "info",
+			},
+			Kafka: &Kafka{
+				Producer: &Producer{
+					ConfigMap: &kafka.ConfigMap{
+						"bootstrap.servers": "127.0.0.1:9092",
+						"group.id":          "test",
+						"auto.offset.reset": "earliest",
+					}},
 			},
 		},
 	}

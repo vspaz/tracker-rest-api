@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/chi-middleware/logrus-logger v0.2.0
+	github.com/confluentinc/confluent-kafka-go v1.9.2
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-chi/render v1.0.2
 	github.com/sirupsen/logrus v1.9.0
