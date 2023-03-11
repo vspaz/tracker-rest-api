@@ -16,9 +16,10 @@ type SingletonConfig struct {
 }
 
 type Conf struct {
-	Http    *Http
-	Logging *Logging
-	Kafka   *Kafka
+	Http                 *Http
+	Logging              *Logging
+	Kafka                *Kafka
+	WriteKeyToKafkaTopic map[string]string
 }
 
 type Producer struct {
@@ -77,6 +78,7 @@ func initConfig() *SingletonConfig {
 						"compression.type":  "gzip",
 					}},
 			},
+			WriteKeyToKafkaTopic: map[string]string{},
 		},
 	}
 }
