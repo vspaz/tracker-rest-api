@@ -1,5 +1,7 @@
 package handlers
 
+type UserDefinedArbitraryFields map[string]interface{}
+
 type Event struct {
 	UserId      string `json:"userId"`
 	WorkspaceId int64  `json:"workspaceId"`
@@ -10,6 +12,7 @@ type Event struct {
 	ReceivedAt  string `json:"receivedAt"`
 	SentAt      string `json:"sentAt"`
 	Timestamp   string `json:"timestamp"`
+	UserDefinedArbitraryFields
 }
 
 type EventBatch struct {
