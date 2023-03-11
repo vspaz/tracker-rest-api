@@ -16,9 +16,39 @@ func (r *Router) handleSingleRequest(response http.ResponseWriter, request *http
 		render.JSON(response, request, map[string]string{"status": "400", "message": "Bad Request"})
 		return
 	}
-	println(writeKey, eventBody)
+	r.saveMessage(writeKey, eventBody)
 	render.Status(request, http.StatusOK)
 	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
+}
+
+func saveBatch(writeKey string, eventBach []Event) map[string]string {
+	if eventBach == nil {
+		return map[string]string{"status": "400", "message": "Bad Request"}
+	}
+	eventBatch := fixWriteKey(writeKey, eventBach)
+	println(eventBatch)
+
+	responseStub := 1
+	switch responseStub {
+	case 3:
+		return map[string]string{"status": "500", "message": "Internal Server Error"}
+	case 2:
+		return map[string]string{"status": "400", "message": "Bad Request"}
+	case 1:
+		return map[string]string{"status": "200", "message": "Partial success"}
+	case 0:
+		return map[string]string{"status": "200 OK", "message": "OK"}
+	default:
+		return map[string]string{"status": "500", "message": "Internal Server Error"}
+	}
+}
+
+func fixWriteKey(writeKey string, eventBatch []Event) []Event {
+	return []Event{}
+}
+
+func (r *Router) saveMessage(writeKey string, eventBody Event) {
+	saveBatch(writeKey, []Event{eventBody})
 }
 
 func (r *Router) Track(response http.ResponseWriter, request *http.Request) {
