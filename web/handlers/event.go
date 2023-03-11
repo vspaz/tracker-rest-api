@@ -4,6 +4,7 @@ type Event struct {
 	UserId      string         `json:"userId"`
 	WorkspaceId int64          `json:"workspaceId"`
 	AnonymousId string         `json:"anonymousId"`
+	MessageId   string         `json:"messageId"`
 	WriteKey    string         `json:"writeKey"`
 	EventType   string         `json:"type"`
 	Event       string         `json:"event"`
