@@ -11,3 +11,8 @@ type Event struct {
 	SentAt      string `json:"sentAt"`
 	Timestamp   string `json:"timestamp"`
 }
+
+type EventBatch struct {
+	Event
+	Batch []Event
+}
