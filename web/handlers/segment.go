@@ -22,33 +22,27 @@ func (r *Router) handleSingleRequest(response http.ResponseWriter, request *http
 }
 
 func (r *Router) Track(response http.ResponseWriter, request *http.Request) {
-	render.Status(request, http.StatusOK)
-	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
+	r.handleSingleRequest(response, request)
 }
 
 func (r *Router) Identify(response http.ResponseWriter, request *http.Request) {
-	render.Status(request, http.StatusOK)
-	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
+	r.handleSingleRequest(response, request)
 }
 
 func (r *Router) Group(response http.ResponseWriter, request *http.Request) {
-	render.Status(request, http.StatusOK)
-	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
+	r.handleSingleRequest(response, request)
 }
 
 func (r *Router) Alias(response http.ResponseWriter, request *http.Request) {
-	render.Status(request, http.StatusOK)
-	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
+	r.handleSingleRequest(response, request)
 }
 
 func (r *Router) Page(response http.ResponseWriter, request *http.Request) {
-	render.Status(request, http.StatusOK)
-	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
+	r.handleSingleRequest(response, request)
 }
 
 func (r *Router) Screen(response http.ResponseWriter, request *http.Request) {
-	render.Status(request, http.StatusOK)
-	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
+	r.handleSingleRequest(response, request)
 }
 
 func (r *Router) Batch(response http.ResponseWriter, request *http.Request) {
