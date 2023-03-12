@@ -1,5 +1,27 @@
 package handlers
 
+type ContextLibrary struct {
+	Group   string `json:"group"`
+	Name    string `json:"name"`
+	Version string `json:"version"`
+}
+
+type ContextPage struct {
+	Referrer string `json:"referrer"`
+	InIframe bool   `json:"inIframe"`
+}
+
+type Context struct {
+	Library   ContextLibrary `json:"library"`
+	Page      ContextPage    `json:"page"`
+	UserAgent string         `json:"userAgent"`
+}
+
+type Traits struct {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+}
+
 type Event struct {
 	UserId      string         `json:"userId"`
 	WorkspaceId int64          `json:"workspaceId"`
@@ -7,12 +29,13 @@ type Event struct {
 	MessageId   string         `json:"messageId"`
 	WriteKey    string         `json:"writeKey"`
 	EventType   string         `json:"type"`
-	Event       string         `json:"event"`
-	Context     map[string]any `json:"context"`
+	Event       string         `json:"event,omitempty"`
+	Context     Context        `json:"context"`
 	Properties  map[string]any `json:"properties"`
 	ReceivedAt  string         `json:"receivedAt"`
 	SentAt      string         `json:"sentAt"`
 	Timestamp   string         `json:"timestamp"`
+	Traits      Traits         `json:"traits,omitempty"`
 }
 
 type EventBatch struct {
@@ -21,9 +44,7 @@ type EventBatch struct {
 }
 
 func (e *Event) addContextProperties(event *Event) {
-	for property, value := range event.Context {
-		e.Context[property] = value
-	}
+	e.Context = event.Context
 }
 
 func (e *Event) addUserDefinedProperties(event *Event) {
