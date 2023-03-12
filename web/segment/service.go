@@ -3,6 +3,7 @@ package segment
 import (
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/sirupsen/logrus"
+	"github.com/vspaz/tracker-rest-api/web/handlers"
 )
 
 const (
@@ -17,3 +18,12 @@ type DefaultSegmentService struct {
 	WriteKeyToTopic map[string]string
 	KafkaProducer   *kafka.Producer
 }
+
+func (d *DefaultSegmentService) Enrich(event handlers.Event) {
+
+}
+
+func (d *DefaultSegmentService) ExtractWorkspaceId(event handlers.Event) {
+
+}
+
