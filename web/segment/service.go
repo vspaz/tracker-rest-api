@@ -27,3 +27,18 @@ func (d *DefaultSegmentService) ExtractWorkspaceId(event handlers.Event) {
 
 }
 
+func (d *DefaultSegmentService) IsWriteKeyValid(writeKey string) bool {
+	return false
+}
+
+func (d *DefaultSegmentService) SaveBatch(batch handlers.EventBatch) {
+
+}
+
+func (d *DefaultSegmentService) Save(batch handlers.EventBatch) {
+
+}
+
+func (d *DefaultSegmentService) Preprocess(event handlers.Event, parentEvent handlers.Event) {
+	
+}
