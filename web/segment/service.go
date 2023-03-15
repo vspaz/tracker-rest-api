@@ -40,5 +40,5 @@ func (d *DefaultSegmentService) Save(batch handlers.EventBatch) {
 }
 
 func (d *DefaultSegmentService) Preprocess(event handlers.Event, parentEvent handlers.Event) {
-	
+
 }

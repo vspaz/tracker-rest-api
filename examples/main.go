@@ -3,17 +3,29 @@ package main
 import (
 	"github.com/segmentio/analytics-go"
 	"log"
-	"os"
+	"time"
 )
 
 func main() {
 	// Instantiates a client to use send messages to the segment API.
-	client := analytics.New(os.Getenv("some key"))
+	client, _ := analytics.NewWithConfig(
+		"some key",
+		analytics.Config{
+			Endpoint:  "http://localhost:5000",
+			Interval:  60 * time.Second,
+			BatchSize: 100,
+			Verbose:   true,
+		})
 
 	// Enqueues a track event that will be sent asynchronously.
 	if err := client.Enqueue(analytics.Track{
-		UserId: "test-user",
-		Event:  "test-snippet",
+		Event:  "Download",
+		UserId: "123456",
+		Properties: map[string]any{
+			"application": "Segment Desktop",
+			"version":     "1.1.0",
+			"platform":    "osx",
+		},
 	}); err != nil {
 		log.Fatalf("error: %s", err)
 	}
