@@ -1,5 +1,7 @@
 package handlers
 
+import "time"
+
 type ContextLibrary struct {
 	Group   string `json:"group"`
 	Name    string `json:"name"`
@@ -24,6 +26,7 @@ type Traits struct {
 
 type Event struct {
 	UserId      string         `json:"userId"`
+	SentAt      string         `json:"sentAt"`
 	WorkspaceId int64          `json:"workspaceId"`
 	AnonymousId string         `json:"anonymousId"`
 	MessageId   string         `json:"messageId"`
@@ -33,14 +36,15 @@ type Event struct {
 	Context     Context        `json:"context"`
 	Properties  map[string]any `json:"properties"`
 	ReceivedAt  string         `json:"receivedAt"`
-	SentAt      string         `json:"sentAt"`
 	Timestamp   string         `json:"timestamp"`
 	Traits      Traits         `json:"traits,omitempty"`
 }
 
 type EventBatch struct {
-	Event
-	Batch []Event
+	MessageId string    `json:"messageId"`
+	SentAt    time.Time `json:"sentAt"`
+	Messages  []Event   `json:"batch"`
+	Context   *Context  `json:"context"`
 }
 
 func (e *Event) addContextProperties(event *Event) {
