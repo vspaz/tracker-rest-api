@@ -1,6 +1,9 @@
 package handlers
 
-import "time"
+import (
+	"net"
+	"time"
+)
 
 type ContextLibrary struct {
 	Group   string `json:"group"`
@@ -14,30 +17,48 @@ type ContextPage struct {
 }
 
 type Context struct {
-	Library   ContextLibrary `json:"library"`
-	Page      ContextPage    `json:"page"`
-	UserAgent string         `json:"userAgent"`
+	App       AppInfo                `json:"app,omitempty"`
+	Campaign  CampaignInfo           `json:"campaign,omitempty"`
+	Device    DeviceInfo             `json:"device,omitempty"`
+	Library   LibraryInfo            `json:"library,omitempty"`
+	Location  LocationInfo           `json:"location,omitempty"`
+	Network   NetworkInfo            `json:"network,omitempty"`
+	OS        OSInfo                 `json:"os,omitempty"`
+	Page      PageInfo               `json:"page,omitempty"`
+	Referrer  ReferrerInfo           `json:"referrer,omitempty"`
+	Screen    ScreenInfo             `json:"screen,omitempty"`
+	IP        net.IP                 `json:"ip,omitempty"`
+	Direct    bool                   `json:"direct,omitempty"`
+	Locale    string                 `json:"locale,omitempty"`
+	Timezone  string                 `json:"timezone,omitempty"`
+	UserAgent string                 `json:"userAgent,omitempty"`
+	Traits    Traits                 `json:"traits,omitempty"`
+	Extra     map[string]interface{} `json:"-"`
 }
 
-type Traits struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
-}
+//type Traits struct {
+//	Name  string `json:"name"`
+//	Email string `json:"email"`
+//}
+
+type Integrations map[string]interface{}
+type Traits map[string]interface{}
 
 type Message struct {
-	UserId      string         `json:"userId"`
-	SentAt      string         `json:"sentAt"`
-	WorkspaceId int64          `json:"workspaceId"`
-	AnonymousId string         `json:"anonymousId"`
-	MessageId   string         `json:"messageId"`
-	WriteKey    string         `json:"writeKey"`
-	EventType   string         `json:"type"`
-	Event       string         `json:"event,omitempty"`
-	Context     Context        `json:"context"`
-	Properties  map[string]any `json:"properties"`
-	ReceivedAt  string         `json:"receivedAt"`
-	Timestamp   string         `json:"timestamp"`
-	Traits      Traits         `json:"traits,omitempty"`
+	Integrations Integrations   `json:"integrations,omitempty"`
+	UserId       string         `json:"userId"`
+	SentAt       string         `json:"sentAt"`
+	WorkspaceId  int64          `json:"workspaceId"`
+	AnonymousId  string         `json:"anonymousId"`
+	MessageId    string         `json:"messageId"`
+	WriteKey     string         `json:"writeKey"`
+	EventType    string         `json:"type"`
+	Event        string         `json:"event,omitempty"`
+	Context      Context        `json:"context"`
+	Properties   map[string]any `json:"properties"`
+	ReceivedAt   string         `json:"receivedAt"`
+	Timestamp    string         `json:"timestamp"`
+	Traits       Traits         `json:"traits,omitempty"`
 }
 
 type Batch struct {
