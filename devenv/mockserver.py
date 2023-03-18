@@ -1,5 +1,6 @@
 import base64
 import json
+import jsonschema
 
 import flask
 from flask import request
@@ -7,11 +8,44 @@ from flask import request
 
 app = flask.Flask(__name__)
 
+batch_schema = {
+    "type": "object",
+    "properties": {
+        "batch": {
+            'type': 'array',
+            'items': {
+                'type': 'object',
+                'properties': {
+                    'integrations': {
+                        'type': 'object',
+                    },
+                }
+            },
+        "sentAt": {
+            'type': 'string',
+        }
+        }
+    }
+}
+
+
+def validate_against_schema(payload, schema):
+    jsonschema.validate(
+        instance=payload,
+        schema=schema,
+        cls=jsonschema.Draft4Validator,
+    )
+
+
+
+def get_write_key(encoded_auth_header: str):
+    return str(base64.b64decode(encoded_auth_header.split(" ")[1]))
+
 
 def batch_request():
     print(json.dumps(flask.request.get_json(), indent=4))
     print(request.headers)
-    print(str(base64.b64decode(request.headers["Authorization"].split(" ")[1])))
+    print(get_write_key(request.headers["Authorization"]))
     return app.response_class(
         response=json.dumps({"status": "200 OK", "message": "OK"}),
         status=200,
