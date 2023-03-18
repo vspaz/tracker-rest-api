@@ -22,9 +22,9 @@ func main() {
 		Event:  "Download",
 		UserId: "123456",
 		Properties: map[string]any{
-			"application": "Segment Desktop",
-			"version":     "1.1.0",
-			"platform":    "osx",
+			"application": "Example App",
+			"version":     "v1.1.0",
+			"platform":    "Linux",
 		},
 	}); err != nil {
 		log.Fatalf("error: %s", err)
