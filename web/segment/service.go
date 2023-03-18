@@ -19,11 +19,11 @@ type DefaultSegmentService struct {
 	KafkaProducer   *kafka.Producer
 }
 
-func (d *DefaultSegmentService) Enrich(event handlers.Event) {
+func (d *DefaultSegmentService) Enrich(message handlers.Message) {
 
 }
 
-func (d *DefaultSegmentService) ExtractWorkspaceId(event handlers.Event) {
+func (d *DefaultSegmentService) ExtractWorkspaceId(message handlers.Message) {
 
 }
 
@@ -31,14 +31,14 @@ func (d *DefaultSegmentService) IsWriteKeyValid(writeKey string) bool {
 	return false
 }
 
-func (d *DefaultSegmentService) SaveBatch(batch handlers.EventBatch) {
+func (d *DefaultSegmentService) SaveBatch(batch handlers.Batch) {
 
 }
 
-func (d *DefaultSegmentService) Save(batch handlers.EventBatch) {
+func (d *DefaultSegmentService) Save(batch handlers.Batch) {
 
 }
 
-func (d *DefaultSegmentService) Preprocess(event handlers.Event, parentEvent handlers.Event) {
+func (d *DefaultSegmentService) Preprocess(message handlers.Message, parentMessage handlers.Message) {
 
 }

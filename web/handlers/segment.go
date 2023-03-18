@@ -9,7 +9,7 @@ import (
 
 func (r *Router) handleSingleRequest(response http.ResponseWriter, request *http.Request) {
 	writeKey := chi.URLParam(request, "writeKey")
-	var eventBody Event
+	var eventBody Message
 	if err := json.NewDecoder(request.Body).Decode(&eventBody); err != nil {
 		r.Logger.Errorf("failed to parse payload %s", err)
 		render.Status(request, http.StatusBadRequest)
@@ -21,7 +21,7 @@ func (r *Router) handleSingleRequest(response http.ResponseWriter, request *http
 	render.JSON(response, request, map[string]string{"status": "200 OK", "message": "OK"})
 }
 
-func saveBatch(eventBatch *EventBatch) map[string]string {
+func saveBatch(eventBatch *Batch) map[string]string {
 	if eventBatch == nil {
 		return map[string]string{"status": "400", "message": "Bad Request"}
 	}
@@ -42,23 +42,23 @@ func saveBatch(eventBatch *EventBatch) map[string]string {
 	}
 }
 
-func fixWriteKey(eventBatch *EventBatch) *EventBatch {
-	if len(eventBatch.WriteKey) > 0 {
-		return eventBatch
+func fixWriteKey(messageBatch *Batch) *Batch {
+	if len(messageBatch.WriteKey) > 0 {
+		return messageBatch
 	}
-	for _, event := range eventBatch.Batch {
+	for _, event := range messageBatch.Batch {
 		if len(event.WriteKey) > 0 {
-			eventBatch.WriteKey = event.WriteKey
-			return eventBatch
+			messageBatch.WriteKey = event.WriteKey
+			return messageBatch
 		}
 	}
-	return eventBatch
+	return messageBatch
 }
 
-func (r *Router) saveMessage(writeKey string, eventBody Event) {
-	eventBach := &EventBatch{
-		Batch: []Event{eventBody},
-		Event: Event{WriteKey: writeKey},
+func (r *Router) saveMessage(writeKey string, eventBody Message) {
+	eventBach := &Batch{
+		Batch:   []Message{eventBody},
+		Message: Message{WriteKey: writeKey},
 	}
 	saveBatch(eventBach)
 }

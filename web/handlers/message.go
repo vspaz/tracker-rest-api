@@ -24,7 +24,7 @@ type Traits struct {
 	Email string `json:"email"`
 }
 
-type Event struct {
+type Message struct {
 	UserId      string         `json:"userId"`
 	SentAt      string         `json:"sentAt"`
 	WorkspaceId int64          `json:"workspaceId"`
@@ -40,24 +40,26 @@ type Event struct {
 	Traits      Traits         `json:"traits,omitempty"`
 }
 
-type EventBatch struct {
+type Batch struct {
 	MessageId string    `json:"messageId"`
 	SentAt    time.Time `json:"sentAt"`
-	Messages  []Event   `json:"batch"`
+	Batch     []Message `json:"batch"`
 	Context   *Context  `json:"context"`
+	WriteKey  string    `json:"writeKey"`
+	Message   Message
 }
 
-func (e *Event) addContextProperties(event *Event) {
+func (e *Message) addContextProperties(event *Message) {
 	e.Context = event.Context
 }
 
-func (e *Event) addUserDefinedProperties(event *Event) {
+func (e *Message) addUserDefinedProperties(event *Message) {
 	for property, value := range event.Properties {
 		e.Properties[property] = value
 	}
 }
 
-func (e *Event) Merge(event *Event) {
+func (e *Message) Merge(event *Message) {
 	if event.AnonymousId != "" {
 		e.AnonymousId = event.AnonymousId
 	}

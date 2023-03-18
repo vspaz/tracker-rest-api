@@ -15,7 +15,7 @@ func TestEventDeserializationOk(t *testing.T) {
 "userId":"12345",
 "messageId":"1645161611",
 "anonymousId":"f6b91eac-a293-4b82-bf60-4cc3dd85a79c"}`)
-	var eventBody Event
+	var eventBody Message
 	err := json.Unmarshal(body, &eventBody)
 	assert.Nil(t, err)
 	assert.Equal(t, "2023-03-11T19:23:48.022Z", eventBody.SentAt)
