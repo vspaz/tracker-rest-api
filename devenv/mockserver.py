@@ -1,5 +1,5 @@
-import json
 import base64
+import json
 
 import flask
 from flask import request
@@ -19,11 +19,34 @@ def batch_request():
     )
 
 
-@app.route("/v1/import/", methods=['GET', 'POST'])
-def import_deprecated():
+@app.route("/v1/import/", methods=['POST'])
+def _import():
     return batch_request()
 
-
-@app.route("/v1/batch/", methods=['GET', 'POST'])
+@app.route("/v1/batch/", methods=['POST'])
 def batch():
+    return batch_request()
+
+@app.route("/v1/track/", methods=['POST'])
+def track():
+    return batch_request()
+
+@app.route("/v1/identify/", methods=['POST'])
+def identify():
+    return batch_request()
+
+@app.route("/v1/group/", methods=['POST'])
+def group():
+    return batch_request()
+
+@app.route("/v1/alias/", methods=['POST'])
+def alias():
+    return batch_request()
+
+@app.route("/v1/page/", methods=['POST'])
+def page():
+    return batch_request()
+
+@app.route("/v1/screen/", methods=['POST'])
+def screen():
     return batch_request()
