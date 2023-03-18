@@ -31,22 +31,46 @@ def batch():
 def track():
     return batch_request()
 
+@app.route("/v1/t/", methods=['POST'])
+def t():
+    return batch_request()
+
 @app.route("/v1/identify/", methods=['POST'])
 def identify():
+    return batch_request()
+
+@app.route("/v1/i/", methods=['POST'])
+def i():
     return batch_request()
 
 @app.route("/v1/group/", methods=['POST'])
 def group():
     return batch_request()
 
+@app.route("/v1/g/", methods=['POST'])
+def g():
+    return batch_request()
+
 @app.route("/v1/alias/", methods=['POST'])
 def alias():
+    return batch_request()
+
+@app.route("/v1/a/", methods=['POST'])
+def a():
     return batch_request()
 
 @app.route("/v1/page/", methods=['POST'])
 def page():
     return batch_request()
 
+@app.route("/v1/p/", methods=['POST'])
+def p():
+    return batch_request()
+
 @app.route("/v1/screen/", methods=['POST'])
 def screen():
+    return batch_request()
+
+@app.route("/v1/s/", methods=['POST'])
+def s():
     return batch_request()
