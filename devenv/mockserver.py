@@ -19,11 +19,35 @@ batch_schema = {
                     'integrations': {
                         'type': 'object',
                     },
-                }
+                    "anonymousId": {
+                        "type": ["string", "null"],
+                    },
+                    "properties": {
+                        "type": "object",
+                    },
+                    "timestamp": {
+                        "type": "string",
+                    },
+                    "context": {
+                        "type": "object",
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                    },
+                    "event": {
+                        "type": "string",
+                    },
+                    "messageId": {
+                        "type": "string"
+                    },
+                },
             },
         "sentAt": {
             'type': 'string',
-        }
+        },
         }
     }
 }
@@ -37,13 +61,16 @@ def validate_against_schema(payload, schema):
     )
 
 
-
 def get_write_key(encoded_auth_header: str):
     return str(base64.b64decode(encoded_auth_header.split(" ")[1]))
 
 
 def batch_request():
     print(json.dumps(flask.request.get_json(), indent=4))
+    validate_against_schema(
+        payload=flask.request.get_json(),
+        schema=batch_schema,
+    )
     print(request.headers)
     print(get_write_key(request.headers["Authorization"]))
     return app.response_class(
