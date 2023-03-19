@@ -1,5 +1,8 @@
 #IDE's
 .idea
 
+# tests
+devenv/__pycache__/
+
 #binary
 tracker

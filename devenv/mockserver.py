@@ -10,33 +10,37 @@ app = flask.Flask(__name__)
 
 
 _MESSAGE = {
-    'integrations': {
-        'type': 'object',
+    'type': 'object',
+    'properties': {
+        'integrations': {
+            'type': 'object',
+        },
+        "anonymousId": {
+            "type": ["string", "null"],
+        },
+        "properties": {
+            "type": "object",
+        },
+        "timestamp": {
+            "type": "string",
+        },
+        "context": {
+            "type": "object",
+        },
+        "userId": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string",
+        },
+        "event": {
+            "type": "string",
+        },
+        "messageId": {
+            "type": "string"
+        },
     },
-    "anonymousId": {
-        "type": ["string", "null"],
-    },
-    "properties": {
-        "type": "object",
-    },
-    "timestamp": {
-        "type": "string",
-    },
-    "context": {
-        "type": "object",
-    },
-    "userId": {
-        "type": "string"
-    },
-    "type": {
-        "type": "string",
-    },
-    "event": {
-        "type": "string",
-    },
-    "messageId": {
-        "type": "string"
-    },
+    "required": ["type", "event", "timestamp", ]
 }
 
 _CONTEXT = {
@@ -48,10 +52,7 @@ batch_schema = {
     "properties": {
         "batch": {
             'type': 'array',
-            'items': {
-                'type': 'object',
-                'properties': _MESSAGE,
-            },
+            'items': _MESSAGE,
         "sentAt": {
             'type': 'string',
         },
