@@ -8,63 +8,52 @@ from flask import request
 
 app = flask.Flask(__name__)
 
+_TYPE_STRING = {
+    "type": "string"
+}
+
+_TYPE_NUMBER = {
+    "type": "number",
+}
+
+_CONTEXT = _PROPERTIES = _TYPE_OBJECT = {
+    "type": "object",
+}
+
+
 
 _MESSAGE = {
     'type': 'object',
     'properties': {
-        'integrations': {
-            'type': 'object',
-        },
+        'integrations': _TYPE_OBJECT,
         "anonymousId": {
             "type": ["string", "null"],
         },
-        "properties": {
-            "type": "object",
-        },
-        "timestamp": {
-            "type": "string",
-        },
-        "context": {
-            "type": "object",
-        },
-        "userId": {
-            "type": "string"
-        },
-        "type": {
-            "type": "string",
-        },
-        "event": {
-            "type": "string",
-        },
-        "messageId": {
-            "type": "string"
-        },
+        "properties": _PROPERTIES,
+        "timestamp": _TYPE_STRING,
+        "context": _CONTEXT,
+        "userId": _TYPE_STRING,
+        "type": _TYPE_STRING,
+        "event": _TYPE_STRING,
+        "messageId": _TYPE_STRING,
     },
-    "required": ["type", "event", "timestamp", ]
 }
 
-_CONTEXT = {
-    "type": "object",
+_BATCH = {
+    'type': 'array',
+    'items': _MESSAGE,
 }
 
 batch_schema = {
     "type": "object",
     "properties": {
-        "batch": {
-            'type': 'array',
-            'items': _MESSAGE,
-        "sentAt": {
-            'type': 'string',
-        },
+        "batch": _BATCH,
+        "sentAt": _TYPE_STRING,
         "context": _CONTEXT,
-        "writeKey": {
-            "type": "string",
-        },
-        "sequence": {
-            "type": "number",
-        },
-        }
-    }
+        "writeKey": _TYPE_STRING,
+        "sequence": _TYPE_NUMBER,
+    },
+    "required": ["writeKey", "batch"]
 }
 
 
