@@ -21,7 +21,6 @@ _CONTEXT = _PROPERTIES = _TYPE_OBJECT = {
 }
 
 
-
 _MESSAGE = {
     'type': 'object',
     'properties': {
