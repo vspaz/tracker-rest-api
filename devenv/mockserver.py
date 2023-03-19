@@ -1,15 +1,14 @@
 import base64
 import json
-import jsonschema
 
 import flask
+import jsonschema
 from flask import request
-
 
 app = flask.Flask(__name__)
 
 _TYPE_STRING = {
-    "type": "string"
+    "type": "string",
 }
 
 _TYPE_NUMBER = {
@@ -20,11 +19,10 @@ _CONTEXT = _PROPERTIES = _TYPE_OBJECT = {
     "type": "object",
 }
 
-
 _MESSAGE = {
-    'type': 'object',
-    'properties': {
-        'integrations': _TYPE_OBJECT,
+    "type": "object",
+    "properties": {
+        "integrations": _TYPE_OBJECT,
         "anonymousId": {
             "type": ["string", "null"],
         },
@@ -39,8 +37,8 @@ _MESSAGE = {
 }
 
 _BATCH = {
-    'type': 'array',
-    'items': _MESSAGE,
+    "type": "array",
+    "items": _MESSAGE,
 }
 
 batch_schema = {
@@ -52,7 +50,7 @@ batch_schema = {
         "writeKey": _TYPE_STRING,
         "sequence": _TYPE_NUMBER,
     },
-    "required": ["writeKey", "batch"]
+    "required": ["writeKey", "batch"],
 }
 
 
@@ -81,62 +79,62 @@ def batch_request():
     return app.response_class(
         response=json.dumps({"status": "200 OK", "message": "OK"}),
         status=200,
-        mimetype='application/json'
+        mimetype="application/json",
     )
 
 
-@app.route("/v1/import/", methods=['POST'])
+@app.route("/v1/import/", methods=["POST"])
 def _import():
     return batch_request()
 
-@app.route("/v1/batch/", methods=['POST'])
+@app.route("/v1/batch/", methods=["POST"])
 def batch():
     return batch_request()
 
-@app.route("/v1/track/", methods=['POST'])
+@app.route("/v1/track/", methods=["POST"])
 def track():
     return batch_request()
 
-@app.route("/v1/t/", methods=['POST'])
+@app.route("/v1/t/", methods=["POST"])
 def t():
     return batch_request()
 
-@app.route("/v1/identify/", methods=['POST'])
+@app.route("/v1/identify/", methods=["POST"])
 def identify():
     return batch_request()
 
-@app.route("/v1/i/", methods=['POST'])
+@app.route("/v1/i/", methods=["POST"])
 def i():
     return batch_request()
 
-@app.route("/v1/group/", methods=['POST'])
+@app.route("/v1/group/", methods=["POST"])
 def group():
     return batch_request()
 
-@app.route("/v1/g/", methods=['POST'])
+@app.route("/v1/g/", methods=["POST"])
 def g():
     return batch_request()
 
-@app.route("/v1/alias/", methods=['POST'])
+@app.route("/v1/alias/", methods=["POST"])
 def alias():
     return batch_request()
 
-@app.route("/v1/a/", methods=['POST'])
+@app.route("/v1/a/", methods=["POST"])
 def a():
     return batch_request()
 
-@app.route("/v1/page/", methods=['POST'])
+@app.route("/v1/page/", methods=["POST"])
 def page():
     return batch_request()
 
-@app.route("/v1/p/", methods=['POST'])
+@app.route("/v1/p/", methods=["POST"])
 def p():
     return batch_request()
 
-@app.route("/v1/screen/", methods=['POST'])
+@app.route("/v1/screen/", methods=["POST"])
 def screen():
     return batch_request()
 
-@app.route("/v1/s/", methods=['POST'])
+@app.route("/v1/s/", methods=["POST"])
 def s():
     return batch_request()
