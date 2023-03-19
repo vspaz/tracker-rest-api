@@ -8,6 +8,41 @@ from flask import request
 
 app = flask.Flask(__name__)
 
+
+_MESSAGE = {
+    'integrations': {
+        'type': 'object',
+    },
+    "anonymousId": {
+        "type": ["string", "null"],
+    },
+    "properties": {
+        "type": "object",
+    },
+    "timestamp": {
+        "type": "string",
+    },
+    "context": {
+        "type": "object",
+    },
+    "userId": {
+        "type": "string"
+    },
+    "type": {
+        "type": "string",
+    },
+    "event": {
+        "type": "string",
+    },
+    "messageId": {
+        "type": "string"
+    },
+}
+
+_CONTEXT = {
+    "type": "object",
+}
+
 batch_schema = {
     "type": "object",
     "properties": {
@@ -15,38 +50,17 @@ batch_schema = {
             'type': 'array',
             'items': {
                 'type': 'object',
-                'properties': {
-                    'integrations': {
-                        'type': 'object',
-                    },
-                    "anonymousId": {
-                        "type": ["string", "null"],
-                    },
-                    "properties": {
-                        "type": "object",
-                    },
-                    "timestamp": {
-                        "type": "string",
-                    },
-                    "context": {
-                        "type": "object",
-                    },
-                    "userId": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                    },
-                    "event": {
-                        "type": "string",
-                    },
-                    "messageId": {
-                        "type": "string"
-                    },
-                },
+                'properties': _MESSAGE,
             },
         "sentAt": {
             'type': 'string',
+        },
+        "context": _CONTEXT,
+        "writeKey": {
+            "type": "string",
+        },
+        "sequence": {
+            "type": "number",
         },
         }
     }
@@ -72,7 +86,9 @@ def batch_request():
         schema=batch_schema,
     )
     print(request.headers)
-    print(get_write_key(request.headers["Authorization"]))
+    write_key = request.headers.get("Authorization", "")
+    if write_key:
+        print(get_write_key(request.headers.get("Authorization", "")))
     return app.response_class(
         response=json.dumps({"status": "200 OK", "message": "OK"}),
         status=200,
