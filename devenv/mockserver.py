@@ -50,7 +50,7 @@ batch_schema = {
         "writeKey": _TYPE_STRING,
         "sequence": _TYPE_NUMBER,
     },
-    "required": ["writeKey", "batch"],
+    "required": ["batch"],
 }
 
 
