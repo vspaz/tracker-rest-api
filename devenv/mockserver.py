@@ -83,7 +83,7 @@ def batch_request():
     )
 
 
-@app.route("/v1/import/", methods=["POST"])
+@app.route("/v1/import", methods=["POST"])
 def _import():
     return batch_request()
 
