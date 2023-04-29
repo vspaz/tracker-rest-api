@@ -5,7 +5,7 @@ import flask
 import jsonschema
 from flask import request
 
-app = flask.Flask(__name__)
+bp = flask.Blueprint(__name__, "mockserver")
 
 _TYPE_STRING = {
     "type": "string",
@@ -83,58 +83,65 @@ def batch_request():
     )
 
 
-@app.route("/v1/import", methods=["POST"])
+@bp.route("/import", methods=["POST"])
 def _import():
     return batch_request()
 
-@app.route("/v1/batch/", methods=["POST"])
+@bp.route("/batch", methods=["POST"])
 def batch():
     return batch_request()
 
-@app.route("/v1/track/", methods=["POST"])
+@bp.route("/track", methods=["POST"])
 def track():
     return batch_request()
 
-@app.route("/v1/t/", methods=["POST"])
+@bp.route("/t", methods=["POST"])
 def t():
     return batch_request()
 
-@app.route("/v1/identify/", methods=["POST"])
+@bp.route("/identify", methods=["POST"])
 def identify():
     return batch_request()
 
-@app.route("/v1/i/", methods=["POST"])
+@bp.route("/i", methods=["POST"])
 def i():
     return batch_request()
 
-@app.route("/v1/group/", methods=["POST"])
+@bp.route("/group", methods=["POST"])
 def group():
     return batch_request()
 
-@app.route("/v1/g/", methods=["POST"])
+@bp.route("/g", methods=["POST"])
 def g():
     return batch_request()
 
-@app.route("/v1/alias/", methods=["POST"])
+@bp.route("/alias", methods=["POST"])
 def alias():
     return batch_request()
 
-@app.route("/v1/a/", methods=["POST"])
+@bp.route("/a", methods=["POST"])
 def a():
     return batch_request()
 
-@app.route("/v1/page/", methods=["POST"])
+@bp.route("/page", methods=["POST"])
 def page():
     return batch_request()
 
-@app.route("/v1/p/", methods=["POST"])
+@bp.route("/p", methods=["POST"])
 def p():
     return batch_request()
 
-@app.route("/v1/screen/", methods=["POST"])
+@bp.route("/screen", methods=["POST"])
 def screen():
     return batch_request()
 
-@app.route("/v1/s/", methods=["POST"])
+@bp.route("/s", methods=["POST"])
 def s():
     return batch_request()
+
+
+if __name__ == "__main__":
+    app = flask.Flask(__name__)
+    app.url_map.strict_slashes = False
+    app.register_blueprint(blueprint=bp, prefix="/api/v1")
+    app.run(host="0.0.0.0", port=5000, debug=True)
