@@ -3,7 +3,6 @@ import base64
 import jsonschema
 import sanic
 
-
 bp = sanic.Blueprint(__name__,  url_prefix="/api/v1")
 app = sanic.Sanic(__name__, strict_slashes=False)
 app.blueprint(blueprint=bp)
@@ -116,7 +115,6 @@ async def page(request):
 @bp.route("/screen", name="screen", methods=["POST"])
 async def screen(request):
     return batch_request()
-
 
 
 if __name__ == "__main__":
