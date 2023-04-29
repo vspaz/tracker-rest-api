@@ -1,10 +1,11 @@
 import base64
 import json
 
-import flask
+import sanic
 import jsonschema
 
-bp = flask.Blueprint(__name__, "mockserver")
+bp = sanic.Blueprint(__name__,  url_prefix="/api/v1")
+app = sanic.Sanic(__name__, strict_slashes=False)
 
 _TYPE_STRING = {
     "type": "string",
@@ -66,58 +67,57 @@ def get_write_key(encoded_auth_header: str):
 
 
 def batch_request():
-    print(json.dumps(flask.request.get_json(), indent=4))
+    print(json.dumps(sanic.request.Request.json, indent=4))
     validate_against_schema(
-        payload=flask.request.get_json(),
+        payload=sanic.request.Request.json,
         schema=batch_schema,
     )
-    print(flask.request.headers)
-    write_key = flask.request.headers.get("Authorization", "")
+    print(sanic.request.Request.headers)
+    write_key = sanic.request.Request.headers.get("Authorization", "")
     if write_key:
-        print(get_write_key(flask.request.headers.get("Authorization", "")))
-    return app.response_class(
+        print(get_write_key(sanic.request.Request.headers.get("Authorization", "")))
+    return sanic.json(dict(
         response=json.dumps({"status": "200 OK", "message": "OK"}),
         status=200,
         mimetype="application/json",
-    )
+    ))
 
-@bp.route("/batch", methods=["POST"])
+# @bp.route("/batch", name="batch", methods=["POST"])
 @bp.route("/import", methods=["POST"])
-def batch():
+async def batch(request):
     return batch_request()
 
-@bp.route("/t", methods=["POST"])
-@bp.route("/track", methods=["POST"])
-def track():
+@bp.route("/t", name="t", methods=["POST"])
+@bp.route("/track", name="track", methods=["POST"])
+async def track(request):
     return batch_request()
 
-@bp.route("/i", methods=["POST"])
-@bp.route("/identify", methods=["POST"])
-def identify():
+@bp.route("/i", name="i", methods=["POST"])
+@bp.route("/identify", name="identify", methods=["POST"])
+async def identify(request):
     return batch_request()
 
-@bp.route("/i", methods=["POST"])
-@bp.route("/group", methods=["POST"])
-def group():
+@bp.route("/g", name="g", methods=["POST"])
+@bp.route("/group", name="group", methods=["POST"])
+async def group(request):
     return batch_request()
 
-@bp.route("/a", methods=["POST"])
-@bp.route("/alias", methods=["POST"])
-def alias():
+@bp.route("/a", name="a", methods=["POST"])
+@bp.route("/alias", name="alias", methods=["POST"])
+async def alias(request):
     return batch_request()
 
-@bp.route("/p", methods=["POST"])
-@bp.route("/page", methods=["POST"])
-def page():
+@bp.route("/p", name="p", methods=["POST"])
+@bp.route("/page", name="page", methods=["POST"])
+async def page(request):
     return batch_request()
 
-@bp.route("/s", methods=["POST"])
-@bp.route("/screen", methods=["POST"])
-def screen():
+@bp.route("/s", name="s", methods=["POST"])
+@bp.route("/screen", name="screen", methods=["POST"])
+async def screen(request):
     return batch_request()
+
+app.blueprint(blueprint=bp)
 
 if __name__ == "__main__":
-    app = flask.Flask(__name__)
-    app.url_map.strict_slashes = False
-    app.register_blueprint(blueprint=bp, prefix="/api/v1")
     app.run(host="0.0.0.0", port=5000, debug=True)
