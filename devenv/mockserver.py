@@ -1,11 +1,13 @@
 import base64
 import json
 
-import sanic
 import jsonschema
+import sanic
+
 
 bp = sanic.Blueprint(__name__,  url_prefix="/api/v1")
 app = sanic.Sanic(__name__, strict_slashes=False)
+app.blueprint(blueprint=bp)
 
 _TYPE_STRING = {
     "type": "string",
@@ -67,7 +69,7 @@ def get_write_key(encoded_auth_header: str):
 
 
 def batch_request():
-    print(json.dumps(sanic.request.Request.json, indent=4))
+    print(sanic.request.Request.json)
     validate_against_schema(
         payload=sanic.request.Request.json,
         schema=batch_schema,
@@ -76,14 +78,13 @@ def batch_request():
     write_key = sanic.request.Request.headers.get("Authorization", "")
     if write_key:
         print(get_write_key(sanic.request.Request.headers.get("Authorization", "")))
-    return sanic.json(dict(
-        response=json.dumps({"status": "200 OK", "message": "OK"}),
+    return sanic.json(
+        body={"status": "200 OK", "message": "OK"},
         status=200,
-        mimetype="application/json",
-    ))
+    )
 
-# @bp.route("/batch", name="batch", methods=["POST"])
-@bp.route("/import", methods=["POST"])
+@bp.route("/batch", name="batch", methods=["POST"])
+@bp.route("/import", name="import", methods=["POST"])
 async def batch(request):
     return batch_request()
 
@@ -117,7 +118,7 @@ async def page(request):
 async def screen(request):
     return batch_request()
 
-app.blueprint(blueprint=bp)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
