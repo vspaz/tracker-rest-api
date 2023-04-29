@@ -3,7 +3,6 @@ import json
 
 import flask
 import jsonschema
-from flask import request
 
 bp = flask.Blueprint(__name__, "mockserver")
 
@@ -72,10 +71,10 @@ def batch_request():
         payload=flask.request.get_json(),
         schema=batch_schema,
     )
-    print(request.headers)
-    write_key = request.headers.get("Authorization", "")
+    print(flask.request.headers)
+    write_key = flask.request.headers.get("Authorization", "")
     if write_key:
-        print(get_write_key(request.headers.get("Authorization", "")))
+        print(get_write_key(flask.request.headers.get("Authorization", "")))
     return app.response_class(
         response=json.dumps({"status": "200 OK", "message": "OK"}),
         status=200,
