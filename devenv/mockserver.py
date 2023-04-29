@@ -82,12 +82,8 @@ def batch_request():
         mimetype="application/json",
     )
 
-
-@bp.route("/import", methods=["POST"])
-def _import():
-    return batch_request()
-
 @bp.route("/batch", methods=["POST"])
+@bp.route("/import", methods=["POST"])
 def batch():
     return batch_request()
 
