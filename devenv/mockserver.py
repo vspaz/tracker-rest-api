@@ -87,54 +87,35 @@ def batch_request():
 def batch():
     return batch_request()
 
+@bp.route("/t", methods=["POST"])
 @bp.route("/track", methods=["POST"])
 def track():
     return batch_request()
 
-@bp.route("/t", methods=["POST"])
-def t():
-    return batch_request()
-
+@bp.route("/i", methods=["POST"])
 @bp.route("/identify", methods=["POST"])
 def identify():
     return batch_request()
 
 @bp.route("/i", methods=["POST"])
-def i():
-    return batch_request()
-
 @bp.route("/group", methods=["POST"])
 def group():
     return batch_request()
 
-@bp.route("/g", methods=["POST"])
-def g():
-    return batch_request()
-
+@bp.route("/a", methods=["POST"])
 @bp.route("/alias", methods=["POST"])
 def alias():
     return batch_request()
 
-@bp.route("/a", methods=["POST"])
-def a():
-    return batch_request()
-
+@bp.route("/p", methods=["POST"])
 @bp.route("/page", methods=["POST"])
 def page():
     return batch_request()
 
-@bp.route("/p", methods=["POST"])
-def p():
-    return batch_request()
-
+@bp.route("/s", methods=["POST"])
 @bp.route("/screen", methods=["POST"])
 def screen():
     return batch_request()
-
-@bp.route("/s", methods=["POST"])
-def s():
-    return batch_request()
-
 
 if __name__ == "__main__":
     app = flask.Flask(__name__)
