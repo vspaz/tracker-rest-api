@@ -8,8 +8,8 @@ require (
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-chi/render v1.0.2
 	github.com/segmentio/analytics-go v3.1.0+incompatible
-	github.com/sirupsen/logrus v1.9.0
-	github.com/stretchr/testify v1.8.2
+	github.com/sirupsen/logrus v1.9.2
+	github.com/stretchr/testify v1.8.3
 	github.com/vspaz/simplelogger v0.1.0
 )
 
